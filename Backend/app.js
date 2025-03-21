@@ -38,6 +38,9 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
+app.set('trust proxy', 1);
+
+
 
 // CORS Middleware (Recommended)
 app.use((req, res, next) => {
