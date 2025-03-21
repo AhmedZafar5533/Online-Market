@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { toast } from "sonner";
 
-const baseUrl = "http://localhost:3000/api";
+const baseUrl = "https://online-market-pv34e6md8-ahmeds-projects-c5602810.vercel.app/";
 
 export const useVendorStore = create((set) => ({
     vendor: [],
