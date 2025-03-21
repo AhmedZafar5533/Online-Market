@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { toast } from "sonner";
 
-const baseUrl = "https://online-market-2dm9.onrender.com";
+const baseUrl = "https://online-market-2dm9.onrender.com/api";
 
 export const useAuthStore = create((set, get) => ({
     user: null,
