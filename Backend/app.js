@@ -31,20 +31,31 @@ app.use(morgan("dev"));
 
 // CORS Middleware (Recommended)
 const corsOptions = {
-  origin: "https://online-market-sable-xi.vercel.app",
+  origin: ["https://online-market-sable-xi.vercel.app", "http://localhost:5173"],
   credentials: true,
 };
+
 app.use(cors(corsOptions));
 
-// Manually Set CORS Headers (Optional but Helpful)
+
+
+// CORS Middleware (Recommended)
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_URL || "https://online-market-sable-xi.vercel.app");
+  const allowedOrigins = [
+    process.env.FRONTEND_URL || "https://online-market-sable-xi.vercel.app",
+    "http://localhost:5173"
+  ];
+  
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.setHeader("Access-Control-Allow-Credentials", "true"); // Important for cookies and sessions
+  res.setHeader("Access-Control-Allow-Credentials", "true");
   next();
 });
-
 // Handle Preflight Requests
 app.options("*", (req, res) => {
   res.sendStatus(200);
