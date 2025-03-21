@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { toast } from "sonner";
 
-const baseUrl = "https://online-market-2dm9.onrender.com";
+const baseUrl = "https://online-market-2dm9.onrender.com/api";
 
 // Helper function for API requests with error handling
 const fetchData = async (url, options) => {
