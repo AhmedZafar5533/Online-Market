@@ -94,10 +94,11 @@ const App = () => {
             {/* <Route path="/products" element={<MainProductPage />} /> */}
             {/* <Route path="/checkout" element={<CheckoutPage />} /> */}
 
-            <Route path="/redirect" element={<RedirectPage />} />
+            
 
             <Route path="*" element={<NotFoundPage />} />
           </Route>
+          <Route path="/redirect" element={<RedirectPage />} />
 
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<RegisterForm />} />
