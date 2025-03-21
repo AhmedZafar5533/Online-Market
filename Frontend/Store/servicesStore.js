@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { toast } from "sonner";
 
-const baseUrl = "https://online-market-pv34e6md8-ahmeds-projects-c5602810.vercel.app";
+const baseUrl = "https://online-market-2dm9.onrender.com";
 
 // Helper function for API requests with error handling
 const fetchData = async (url, options) => {
