@@ -38,7 +38,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
-// app.set('trust proxy', 1);
+app.set('trust proxy', 1);
 
 
 
@@ -101,7 +101,7 @@ app.use(
     store: store,
     cookie: {
       httpOnly: true,
-      secure: false,
+      secure: true,
       maxAge: 24 * 1000 * 60 * 60,
     },
   })
