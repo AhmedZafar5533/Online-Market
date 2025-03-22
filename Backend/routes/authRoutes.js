@@ -90,6 +90,7 @@ router.post("/signup", async (req, res) => {
                     sameSite: "Strict",
                     maxAge: 7 * 60 * 1000,
                 });
+                
 
                 return res.status(201).json({
                     message: "User created successfully",
@@ -131,6 +132,7 @@ router.post("/login", (req, res, next) => {
                     sameSite: "Strict",
                     maxAge: 7 * 60 * 1000,
                 });
+                console.log(req.user)
 
                 res.status(200).json({
                     otpRequired: true,
