@@ -18,7 +18,7 @@ const MobileNavbar = ({ menuItems, performSearch }) => {
     const isSearchOpenRef = useRef(isSearchOpen);
     const profileMenuRef = useRef(null);
 
-    const { authenticationState: isLoggedIn, sendLogoutRequest } = useAuthStore();
+    const { authenticationState: isLoggedIn, sendLogoutRequest, user } = useAuthStore();
 
     // Update refs when state changes
     useEffect(() => {
@@ -148,7 +148,7 @@ const MobileNavbar = ({ menuItems, performSearch }) => {
                                     >
                                         <div className="py-1">
                                             <Link
-                                                to="/dashboard/profile"
+                                                to={user.role === 'admin' ? '/admin' : '/dashboard'}
                                                 className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-indigo-50 transition-colors duration-200"
                                                 onClick={() => setShowProfileMenu(false)}
                                             >
