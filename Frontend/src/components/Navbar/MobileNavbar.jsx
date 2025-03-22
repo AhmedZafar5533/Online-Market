@@ -1,10 +1,7 @@
-// MobileNavbar.jsx
 import { useState, useRef, useEffect } from 'react';
 import { Menu, X, ChevronDown, Search, ArrowRight, User, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuthStore } from '../../../Store/authStore';
-
-
 
 const MobileNavbar = ({ menuItems, performSearch }) => {
     const [isOpen, setIsOpen] = useState(false);
@@ -77,6 +74,11 @@ const MobileNavbar = ({ menuItems, performSearch }) => {
         }
     };
 
+    // New function to close mobile menu
+    const closeMenu = () => {
+        setIsOpen(false);
+    };
+
     // Handle search input change
     const handleSearchChange = (e) => {
         const query = e.target.value;
@@ -110,7 +112,7 @@ const MobileNavbar = ({ menuItems, performSearch }) => {
                         {/* Logo */}
                         <div className="flex-shrink-0 flex items-center">
                             <div className="text-indigo-700 font-bold text-xl md:text-2xl tracking-tight">
-                                <Link to="/">Morbo Global</Link>
+                                <Link to="/" onClick={closeMenu}>Morbo Global</Link>
                             </div>
                         </div>
                     </div>
@@ -148,7 +150,7 @@ const MobileNavbar = ({ menuItems, performSearch }) => {
                                     >
                                         <div className="py-1">
                                             <Link
-                                                to={user.role === 'admin' ? '/admin' : '/dashboard/profile'}
+                                                 to={user.role === 'admin' ? '/admin' : '/dashboard/profile'}
                                                 className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-indigo-50 transition-colors duration-200"
                                                 onClick={() => setShowProfileMenu(false)}
                                             >
@@ -170,7 +172,7 @@ const MobileNavbar = ({ menuItems, performSearch }) => {
                                 )}
                             </div>
                         ) : (
-                            <Link to="/redirect">
+                            <Link to="/redirect" onClick={closeMenu}>
                                 <button className="cursor-pointer ml-4 px-4 py-1.5 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 shadow-sm transition-colors duration-300">
                                     Sign up
                                 </button>
@@ -325,6 +327,7 @@ const MobileNavbar = ({ menuItems, performSearch }) => {
                                                         key={subIndex}
                                                         to={subItem.link || '#'}
                                                         className="flex items-start px-4 py-3 text-base text-gray-700 hover:bg-indigo-50 rounded-xl transition-colors duration-300"
+                                                        onClick={closeMenu}
                                                     >
                                                         <div>
                                                             <div className="font-medium">{subItem.name}</div>
@@ -337,6 +340,7 @@ const MobileNavbar = ({ menuItems, performSearch }) => {
                                                         <Link
                                                             to={item.link || '#'}
                                                             className="inline-flex items-center px-4 py-2 text-sm font-medium text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors duration-300"
+                                                            onClick={closeMenu}
                                                         >
                                                             Browse more
                                                             <ArrowRight className="ml-1 h-4 w-4" />
@@ -350,6 +354,7 @@ const MobileNavbar = ({ menuItems, performSearch }) => {
                                     <Link
                                         to={item.link}
                                         className="block px-4 py-3.5 text-base font-medium text-gray-800 hover:bg-indigo-50 rounded-xl transition-colors duration-300"
+                                        onClick={closeMenu}
                                     >
                                         {item.title}
                                     </Link>
@@ -362,53 +367,28 @@ const MobileNavbar = ({ menuItems, performSearch }) => {
                         <div className="space-y-4">
                             {!isLoggedIn ? (
                                 <>
-                                    <Link to="/login">
+                                    <Link to="/login" onClick={closeMenu}>
                                         <button className="mb-2 cursor-pointer w-full px-4 py-3 text-center text-sm font-medium text-gray-700 hover:text-indigo-700 border border-gray-300 rounded-xl hover:border-indigo-400 transition-colors duration-300">
                                             Login
                                         </button>
                                     </Link>
-                                    <Link to="/redirect">
+                                    <Link to="/redirect" onClick={closeMenu}>
                                         <button className="w-full px-4 py-3 text-center text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
                                             Sign up
                                         </button>
                                     </Link>
                                 </>
                             ) : (
-
-
-                                <button className="w-full px-4 py-3 text-center text-sm font-medium text-white bg-indigo-600
-                                     hover:bg-indigo-700 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
+                                <button
+                                    className="w-full px-4 py-3 text-center text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
                                     onClick={() => {
                                         sendLogoutRequest();
                                         setShowProfileMenu(false);
-                                    }}>
+                                        closeMenu();
+                                    }}
+                                >
                                     Logout
                                 </button>
-
-
-                                // <div className="py-2">
-                                //     <div className="flex items-center mb-4">
-                                //         <div className="h-12 w-12 rounded-full bg-indigo-100 border-2 border-indigo-300 overflow-hidden">
-                                //             <img
-                                //                 src="https://www.gravatar.com/avatar/?d=mp&s=200"
-                                //                 alt="Profile"
-                                //                 className="h-full w-full object-cover"
-                                //             />
-                                //         </div>
-
-                                //     </div>
-                                //     {/* <Link to="/dashboard/profile">
-                                //         <button className="mb-2 cursor-pointer w-full px-4 py-3 text-center text-sm font-medium text-gray-700 hover:text-indigo-700 border border-gray-300 rounded-xl hover:border-indigo-400 transition-colors duration-300">
-                                //             Dashboard
-                                //         </button>
-                                //     </Link> */}
-                                //     {/* <button
-                                //         onClick={sendLogoutRequest}
-                                //         className="w-full px-4 py-3 text-center text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
-                                //     >
-                                //         Logout
-                                //     </button> */}
-                                // </div>
                             )}
                         </div>
                     </div>
