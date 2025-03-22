@@ -148,7 +148,7 @@ const MobileNavbar = ({ menuItems, performSearch }) => {
                                     >
                                         <div className="py-1">
                                             <Link
-                                                to={user.role === 'admin' ? '/admin' : '/dashboard'}
+                                                to={user.role === 'admin' ? '/admin' : '/dashboard/profile'}
                                                 className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-indigo-50 transition-colors duration-200"
                                                 onClick={() => setShowProfileMenu(false)}
                                             >
