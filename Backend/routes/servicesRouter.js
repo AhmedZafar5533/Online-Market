@@ -133,7 +133,7 @@ router.post("/services/initialize", auth, checkVendor, async (req, res) => {
             description,
             image,
             status,
-            vendorName: existingVendor.name,
+            vendorName: existingVendor.businessDetails.businessName,,
         });
         await newService.save();
 
