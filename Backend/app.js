@@ -99,11 +99,12 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: store,
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      maxAge: 24 * 1000 * 60 * 60,
-    },
+   cookie: {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    maxAge: 24 * 1000 * 60 * 60,
+},
   })
 );
 
