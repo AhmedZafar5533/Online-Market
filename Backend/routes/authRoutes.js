@@ -110,30 +110,35 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", (req, res, next) => {
-    passport.authenticate("local", (err, user, info) => {
-        if (err) return next(err);
-        if (!user) return res.status(401).json({ message: info.message });
+    console.log(req.body);
+    req.session.regenerate((err) => {
+        if (err)
+            return res
+                .status(500)
+                .json({ message: "Session regeneration failed" });
 
-        req.logIn(user, async (err) => {
+        passport.authenticate("local", (err, user, info) => {
             if (err) return next(err);
-            
-            // Store user ID in session
-            req.session.userId = user._id;
-            
-            await User.findByIdAndUpdate(user._id, { otpVerified: false });
-            res.cookie("redirectToOtp", "true", {
-                httpOnly: true,
-                secure: true,
-                sameSite: "Strict",
-                maxAge: 7 * 60 * 1000,
-            });
+            if (!user) return res.status(401).json({ message: info.message });
 
-            res.status(200).json({
-                otpRequired: true,
-                authenticationStatus: "pending",
+            req.logIn(user, async (err) => {
+                if (err) return next(err);
+                req.session._id = user._id;
+                await User.findByIdAndUpdate(user._id, { otpVerified: false });
+                res.cookie("redirectToOtp", "true", {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: "Strict",
+                    maxAge: 7 * 60 * 1000,
+                });
+
+                res.status(200).json({
+                    otpRequired: true,
+                    authenticationStatus: "pending",
+                });
             });
-        });
-    })(req, res, next);
+        })(req, res, next);
+    });
 });
 router.get("/logout", async (req, res) => {
     if (!req.user) {
