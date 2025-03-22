@@ -210,7 +210,7 @@ const DesktopNavbar = ({ menuItems, performSearch }) => {
                                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50 profile-menu">
                                         <div className="py-1">
                                             <Link
-                                                to={user.role === 'admin' ? '/admin' : '/dashboard'}
+                                                to={user.role === 'admin' ? '/admin' : '/dashboard/profile'}
                                                 className="flex items-center px-4 py-3 text-sm text-gray-700 hover:bg-indigo-50 transition-colors duration-200"
                                             >
                                                 <User size={16} className="mr-2 text-indigo-700" />
