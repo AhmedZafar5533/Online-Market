@@ -30,40 +30,35 @@ app.use(express.json({ limit: "5mb" }));
 app.use(morgan("dev"));
 
 // CORS Middleware (Recommended)
-// Remove the second CORS middleware and just use cors package
 const corsOptions = {
-  origin: [process.env.FRONTEND_URL || "https://online-market-sable-xi.vercel.app", "http://localhost:5173"],
+  origin: ["https://online-market-sable-xi.vercel.app", "http://localhost:5173"],
   credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"]
 };
+
 app.use(cors(corsOptions));
 
 
+// app.set('trust proxy', 1);
 
- app.set('trust proxy', 1);
- 
- 
- 
- // CORS Middleware (Recommended)
- app.use((req, res, next) => {
-   const allowedOrigins = [
-     process.env.FRONTEND_URL || "https://online-market-sable-xi.vercel.app",
-     "http://localhost:5173"
-   ];
-   
-   const origin = req.headers.origin;
-   if (allowedOrigins.includes(origin)) {
-     res.setHeader("Access-Control-Allow-Origin", origin);
-   }
-   
-   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-   res.setHeader("Access-Control-Allow-Credentials", "true");
-   next();
- });
- 
 
+
+// CORS Middleware (Recommended)
+app.use((req, res, next) => {
+  const allowedOrigins = [
+    process.env.FRONTEND_URL || "https://online-market-sable-xi.vercel.app",
+    "http://localhost:5173"
+  ];
+  
+  const origin = req.headers.origin;
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+  }
+  
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  next();
+});
 // Handle Preflight Requests
 app.options("*", (req, res) => {
   res.sendStatus(200);
@@ -109,7 +104,6 @@ app.use(
       secure: false,
       maxAge: 24 * 1000 * 60 * 60,
     },
-    proxy: true,
   })
 );
 
