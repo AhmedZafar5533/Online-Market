@@ -313,7 +313,7 @@ const VendorDetailPage = () => {
                                     <div className="flex justify-center mb-4">
                                         <div className="h-24 w-40 rounded-2xl overflow-hidden">
                                             <img
-                                                src="https://as1.ftcdn.net/jpg/02/43/12/34/1000_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.webp"
+                                                src={ownerDetails.ownerPhoto}
                                                 alt="Owner"
                                                 className="h-full w-full object-cover"
                                             />
