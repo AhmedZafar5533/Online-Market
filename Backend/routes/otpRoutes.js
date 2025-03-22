@@ -3,8 +3,15 @@ const crypto = require("crypto");
 const bcrypt = require("bcrypt");
 const Otp = require("../models/Otp");
 const User = require("../models/User");
+const passport = require("passport"); // Add this
 
 const router = express.Router();
+
+// Add this middleware to ensure passport session is used
+router.use(passport.initialize());
+router.use(passport.session());
+
+
 
 router.get("/gen-otp", async (req, res) => {
     try {
