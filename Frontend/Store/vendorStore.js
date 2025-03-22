@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { toast } from "sonner";
 
-const baseUrl = "https://online-market-2dm9.onrender.com/api";
+const baseUrl = "https://online-market-api.vercel.app/api";
 
 export const useVendorStore = create((set) => ({
     vendor: [],
