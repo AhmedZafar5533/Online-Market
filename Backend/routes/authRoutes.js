@@ -76,9 +76,6 @@ router.post("/signup", async (req, res) => {
             await user.save();
         }
         
-        // Don't send a response here, instead proceed to login
-        // This was causing the ERR_HTTP_HEADERS_SENT error
-        // res.status(201).json({ message: "User created successfully" });
 
         req.logIn(user, async (err) => {
             if (err) {
@@ -113,37 +110,31 @@ router.post("/signup", async (req, res) => {
 });
 
 router.post("/login", (req, res, next) => {
-    console.log(req.body);
-    req.session.regenerate((err) => {
-        if (err)
-            return res
-                .status(500)
-                .json({ message: "Session regeneration failed" });
+    passport.authenticate("local", (err, user, info) => {
+        if (err) return next(err);
+        if (!user) return res.status(401).json({ message: info.message });
 
-        passport.authenticate("local", (err, user, info) => {
+        req.logIn(user, async (err) => {
             if (err) return next(err);
-            if (!user) return res.status(401).json({ message: info.message });
-
-            req.logIn(user, async (err) => {
-                if (err) return next(err);
-                req.session._id = user._id;
-                await User.findByIdAndUpdate(user._id, { otpVerified: false });
-                res.cookie("redirectToOtp", "true", {
-                    httpOnly: true,
-                    secure: true,
-                    sameSite: "Strict",
-                    maxAge: 7 * 60 * 1000,
-                });
-
-                res.status(200).json({
-                    otpRequired: true,
-                    authenticationStatus: "pending",
-                });
+            
+            // Store user ID in session
+            req.session.userId = user._id;
+            
+            await User.findByIdAndUpdate(user._id, { otpVerified: false });
+            res.cookie("redirectToOtp", "true", {
+                httpOnly: true,
+                secure: true,
+                sameSite: "Strict",
+                maxAge: 7 * 60 * 1000,
             });
-        })(req, res, next);
-    });
-});
 
+            res.status(200).json({
+                otpRequired: true,
+                authenticationStatus: "pending",
+            });
+        });
+    })(req, res, next);
+});
 router.get("/logout", async (req, res) => {
     if (!req.user) {
         return res.status(401).json({ message: "Unauthorized" });
