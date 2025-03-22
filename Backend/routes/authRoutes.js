@@ -17,6 +17,8 @@ router.get("/check", checkAuthetication, (req, res) => {
 });
 
 router.get("/check-admin", checkAuthetication, checkAdmin, (req, res) => {
+    const { password, ...safeUser } = req.user.toObject();
+    
     res.status(200).json({
         user: safeUser,
         isAuthenticated: true,
@@ -52,8 +54,10 @@ router.post("/signup", async (req, res) => {
             console.log(messages);
             return res.status(400).json({ message: messages });
         }
+        
+        let user;
         if (role === "customer") {
-            const user = new User({
+            user = new User({
                 username: lowerCasedUsernmae,
                 email: lowerCasedEmail,
                 password,
@@ -62,7 +66,7 @@ router.post("/signup", async (req, res) => {
             });
             await user.save();
         } else if (role === "vendor") {
-            const user = new User({
+            user = new User({
                 username: lowerCasedUsernmae,
                 email: lowerCasedEmail,
                 password,
@@ -71,7 +75,10 @@ router.post("/signup", async (req, res) => {
             });
             await user.save();
         }
-        res.status(201).json({ message: "User created successfully" });
+        
+        // Don't send a response here, instead proceed to login
+        // This was causing the ERR_HTTP_HEADERS_SENT error
+        // res.status(201).json({ message: "User created successfully" });
 
         req.logIn(user, async (err) => {
             if (err) {
@@ -88,6 +95,7 @@ router.post("/signup", async (req, res) => {
                 });
 
                 return res.status(201).json({
+                    message: "User created successfully",
                     otpRequired: true,
                     authenticationStatus: false,
                 });
