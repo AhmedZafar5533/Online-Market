@@ -151,7 +151,7 @@ const LoginPage = () => {
                   Logging In...
                 </>
               ) : (
-                "Sign In"
+                "Login"
               )}
             </button>
 
