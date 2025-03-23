@@ -168,7 +168,7 @@ const HeroSection = () => {
 
         <div className="flex flex-col sm:flex-row justify-center font-['alergy'] gap-4 sm:gap-5 flex-wrap mt-5">
           <Link
-            to="/market"
+            to="/services"
             className="no-underline relative overflow-hidden px-5 sm:px-7 py-3 sm:py-3.5 rounded-full uppercase font-semibold text-sm sm:text-base cursor-pointer bg-indigo-700 text-[#f5f5f5] rounded-tl-lg rounded-br-lg hover:shadow-xl hover:-translate-y-1.5 group w-full sm:w-auto text-center"
           >
             <span className="absolute top-0 left-[-100%] w-full h-full bg-white/20 group-hover:left-0 transition-all duration-400 z-[-1]"></span>
