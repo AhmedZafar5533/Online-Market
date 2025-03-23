@@ -34,6 +34,7 @@ const NotFoundPage = lazy(() => import("./Pages/404Page"));
 const ProtectedRoute = memo(({ children }) => {
   const { authenticationState, loading, redirectToOtp } = useAuthStore();
   const location = useLocation();
+  
 
   if (loading) {
     return <LoadingSpinner />;
@@ -56,7 +57,13 @@ const ProtectedRoute = memo(({ children }) => {
 const App = () => {
   const { checkAuth } = useAuthStore();
 
+    const { pathname } = useLocation();
+  
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
+  
   useEffect(() => {
     let isMounted = true;
 
